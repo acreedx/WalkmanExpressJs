@@ -1,40 +1,46 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
 const express = require("express");
-const uri =
-  "mongodb+srv://Acreedx:12345678Abcd@cluster0.txjxmxd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const connectDB = require('./db');
+const artistasRouter = require('./routers/artistas');
+const app = express();
+app.use(express.json());
+connectDB();
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+const port = 3000;
+app.use('/artistas', artistasRouter);
+app.get("/sembrarDatos", (req, res) => {
+  crearDatosIniciales();
+  res.send("Datos sembrados correctamente!");
 });
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+const crearDatosIniciales = async () => {
+  const badBunny = await Artista.create({
+    nombreArtista: 'Bad Bunny',
+    biografia: 'Benito Antonio Martínez Ocasio, conocido por su nombre artístico Bad Bunny, es un cantante puertorriqueño de reggaeton y trap latino.'
+  });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+  const unVeranoSinTi = await Album.create({
+    tituloAlbum: 'Un Verano Sin Ti',
+    artistaID: badBunny._id,
+    fechaLanzamiento: '2022-05-06',
+    portada: 'URLDeLaPortadaDelAlbum'
+  });
 
-    const app = express();
-    const port = 3000;
+  const moscowMule = await Cancion.create({
+    titulo: 'Moscow Mule',
+    artistaID: badBunny._id,
+    albumID: unVeranoSinTi._id,
+    duracion: '4:06',
+    fechaLanzamiento: '2022-05-06',
+    URLArchivo: 'URLDeLaCancionMoscowMule'
+  });
+  const favoritosVerano = await ListaReproduccion.create({
+    nombreLista: 'Favoritos de Verano',
+    userID: '1234Abcd',
+    publica: true,
+    canciones: ["664283ceb95e55f48cb200cc"]
+  });
 
-    app.get("/", (req, res) => {
-      res.send("Hello World!");
-    });
-
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
-    });
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+  console.log('Datos iniciales creados correctamente');
+};
