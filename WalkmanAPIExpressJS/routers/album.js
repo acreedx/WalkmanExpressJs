@@ -7,6 +7,7 @@ const timeLog = (req, res, next) => {
 router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const Albumes = await Album.find();
     res.json(Albumes);
@@ -16,6 +17,7 @@ router.get("/", async (req, res) => {
 });
 //crear
 router.post("/albums", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const nuevoAlbum = new Album(req.body);
     const albumGuardado = await nuevoAlbum.save();
@@ -26,6 +28,7 @@ router.post("/albums", async (req, res) => {
 });
 //modificar
 router.put("/albums/:id", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const { id } = req.params;
     const albumActualizado = await Album.findByIdAndUpdate(id, req.body, {
@@ -38,5 +41,10 @@ router.put("/albums/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+router.options("/albums/:id", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.send(200);
 });
 module.exports = router;

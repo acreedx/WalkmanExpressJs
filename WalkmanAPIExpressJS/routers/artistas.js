@@ -7,6 +7,7 @@ const timeLog = (req, res, next) => {
 router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const artistas = await Artista.find();
     res.json(artistas);
@@ -16,6 +17,7 @@ router.get("/", async (req, res) => {
 });
 //crear
 router.post("/artistas", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const nuevoArtista = new Artista(req.body);
     const artistaGuardado = await nuevoArtista.save();
@@ -26,6 +28,7 @@ router.post("/artistas", async (req, res) => {
 });
 //modificar
 router.put("/artistas/:id", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
   try {
     const { id } = req.params;
     const artistaActualizado = await Artista.findByIdAndUpdate(id, req.body, {
@@ -38,5 +41,10 @@ router.put("/artistas/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+router.options("/artistas/:id", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.send(200);
 });
 module.exports = router;
