@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Album = require("../models/index.js");
+const Album = require("../models/album.js");
 const timeLog = (req, res, next) => {
   next();
 };

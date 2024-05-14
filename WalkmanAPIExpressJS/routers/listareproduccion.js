@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ListaReproduccion = require("../models/index.js");
+const ListaReproduccion = require("../models/listareproduccion.js");
 const timeLog = (req, res, next) => {
   next();
 };
