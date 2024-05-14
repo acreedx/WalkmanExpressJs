@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Artista = require('../models/index.js' );
+const Artista = require("../models/index.js");
 const timeLog = (req, res, next) => {
-  next()
-}
-router.use(timeLog)
+  next();
+};
+router.use(timeLog);
 //listar
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const artistas = await Artista.find();
     res.json(artistas);
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
   }
 });
 //crear
-router.post('/artistas', async (req, res) => {
+router.post("/artistas", async (req, res) => {
   try {
     const nuevoArtista = new Artista(req.body);
     const artistaGuardado = await nuevoArtista.save();
@@ -25,12 +25,14 @@ router.post('/artistas', async (req, res) => {
   }
 });
 //modificar
-router.put('/artistas/:id', async (req, res) => {
+router.put("/artistas/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const artistaActualizado = await Artista.findByIdAndUpdate(id, req.body, { new: true });
+    const artistaActualizado = await Artista.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!artistaActualizado) {
-      return res.status(404).json({ error: 'Artista no encontrado' });
+      return res.status(404).json({ error: "Artista no encontrado" });
     }
     res.json(artistaActualizado);
   } catch (error) {

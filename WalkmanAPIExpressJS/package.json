@@ -13,5 +13,8 @@
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.4",
     "mongose": "^0.0.2-security"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
