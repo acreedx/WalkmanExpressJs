@@ -17,16 +17,6 @@ const usuariosSchema = new Schema({
   usuariosSeguidos: [{ type: Schema.Types.ObjectId, ref: 'Usuarios' }]
 });
 
-const albumSchema = new Schema({
-  artistaID: { type: Schema.Types.ObjectId, ref: 'Artista', required: true },
-  tituloAlbum: { type: String, required: true },
-  fechaLanzamiento: { type: Date, required: true },
-  URLportada: { type: String, required: true },
-  canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' }],
-  estado: { type: Boolean, default: false },
-  numeroReproducciones: { type: Number, required: true }
-});
-
 const preferenciasSchema = new Schema({
   userID: { type: Schema.Types.ObjectId, ref: 'Usuario', required: true },
   canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' , megusta: { type: Boolean }}],
@@ -35,15 +25,12 @@ const preferenciasSchema = new Schema({
   usuarios: [{ type: String, ref: 'Usuarios' , numeroreproduccionesusuario: { type: Number }}],
 })
 
-const cancionSchema = new Schema({
-  autorID: { type: Schema.Types.ObjectId, ref: 'Artista', ref: 'Usuario', required: true },
-  albumID: { type: Schema.Types.ObjectId, ref: 'Album', required: true },
-  titulo: { type: String, required: true },
-  duracion: { type: String, required: true },
-  genero: { type: String, required: true },
+const albumSchema = new Schema({
+  artistaID: { type: Schema.Types.ObjectId, ref: 'Artista', required: true },
+  tituloAlbum: { type: String, required: true },
   fechaLanzamiento: { type: Date, required: true },
-  URLPortada: { type: String, required: true },
-  URLArchivo: { type: String, required: true },
+  URLportada: { type: String, required: true },
+  canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' }],
   estado: { type: Boolean, default: false },
   numeroReproducciones: { type: Number, required: true }
 });
@@ -55,6 +42,19 @@ const listaReproduccionSchema = new Schema({
   publica: { type: Boolean, default: false },
   fechaCreacion: { type: Date, required: true },
   canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' }],
+  estado: { type: Boolean, default: false },
+  numeroReproducciones: { type: Number, required: true }
+});
+
+const cancionSchema = new Schema({
+  autorID: { type: Schema.Types.ObjectId, ref: 'Artista', ref: 'Usuario', required: true },
+  albumID: { type: Schema.Types.ObjectId, ref: 'Album', required: true },
+  titulo: { type: String, required: true },
+  duracion: { type: String, required: true },
+  genero: { type: String, required: true },
+  fechaLanzamiento: { type: Date, required: true },
+  URLPortada: { type: String, required: true },
+  URLArchivo: { type: String, required: true },
   estado: { type: Boolean, default: false },
   numeroReproducciones: { type: Number, required: true }
 });
