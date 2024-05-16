@@ -31,7 +31,7 @@ const crearDatosIniciales = async () => {
     tituloAlbum: "Un Verano Sin Ti",
     artistaID: badBunny._id,
     fechaLanzamiento: "2022-05-06",
-    portada: "URLDeLaPortadaDelAlbum",
+    portada: "URLDeLaPortadaDelAlbum"
   });
 
   const moscowMule = await Cancion.create({
@@ -40,13 +40,13 @@ const crearDatosIniciales = async () => {
     albumID: unVeranoSinTi._id,
     duracion: "4:06",
     fechaLanzamiento: "2022-05-06",
-    URLArchivo: "URLDeLaCancionMoscowMule",
+    URLArchivo: "URLDeLaCancionMoscowMule"
   });
   const favoritosVerano = await ListaReproduccion.create({
     nombreLista: "Favoritos de Verano",
     userID: "1234Abcd",
     publica: true,
-    canciones: [moscowMule._id],
+    canciones: [moscowMule._id]
   });
 
   console.log("Datos iniciales creados correctamente");
