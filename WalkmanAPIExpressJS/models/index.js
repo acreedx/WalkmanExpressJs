@@ -12,6 +12,7 @@ const usuariosSchema = new Schema({
   nombre: { type: String, required: true },
   URLFoto: { type: String, required: true },
   descripcion: { type: String, required: true },
+  estado: { type: Boolean, default: false },
   artistasSeguidos: [{ type: Schema.Types.ObjectId, ref: 'Artista' }],
   usuariosSeguidos: [{ type: Schema.Types.ObjectId, ref: 'Usuarios' }]
 });
@@ -20,7 +21,7 @@ const albumSchema = new Schema({
   artistaID: { type: Schema.Types.ObjectId, ref: 'Artista', required: true },
   tituloAlbum: { type: String, required: true },
   fechaLanzamiento: { type: Date, required: true },
-  portada: { type: String, required: true },
+  URLportada: { type: String, required: true },
   canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' }],
   estado: { type: Boolean, default: false },
   numeroReproducciones: { type: Number, required: true }
@@ -30,10 +31,12 @@ const preferenciasSchema = new Schema({
   userID: { type: Schema.Types.ObjectId, ref: 'Usuario', required: true },
   canciones: [{ type: Schema.Types.ObjectId, ref: 'Cancion' , megusta: { type: Boolean }}],
   generos: [{ type: String, ref: 'Generos' , numeroreproduccionesgenero: { type: Number }}],
+  artistas: [{ type: String, ref: 'Artistas' , numeroreproduccionesartista: { type: Number }}],
+  usuarios: [{ type: String, ref: 'Usuarios' , numeroreproduccionesusuario: { type: Number }}],
 })
 
 const cancionSchema = new Schema({
-  artistaID: { type: Schema.Types.ObjectId, ref: 'Artista', required: true },
+  autorID: { type: Schema.Types.ObjectId, ref: 'Artista', ref: 'Usuario', required: true },
   albumID: { type: Schema.Types.ObjectId, ref: 'Album', required: true },
   titulo: { type: String, required: true },
   duracion: { type: String, required: true },
