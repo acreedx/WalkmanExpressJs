@@ -8,28 +8,35 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const Albumes = await Album.find();
     res.json(Albumes);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 });
 //crear
-router.post("/albums", async (req, res) => {
+router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const nuevoAlbum = new Album(req.body);
     const albumGuardado = await nuevoAlbum.save();
     res.json(albumGuardado);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
 //modificar
-router.put("/albums/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const { id } = req.params;
     const albumActualizado = await Album.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -38,11 +45,13 @@ router.put("/albums/:id", async (req, res) => {
       return res.status(404).json({ error: "Álbum no encontrado" });
     }
     res.json(albumActualizado);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
-router.options("/albums/:id", async (req, res) => {
+router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.send(200);

@@ -8,26 +8,32 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const Canciones = await Cancion.find();
     res.json(Canciones);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 });
 //crear
-router.post("/canciones", async (req, res) => {
+router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const nuevaCancion = new Cancion(req.body);
     const cancionGuardada = await nuevaCancion.save();
     res.json(cancionGuardada);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
 //modificar
-router.put("/canciones/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
   try {
     const { id } = req.params;
@@ -38,11 +44,13 @@ router.put("/canciones/:id", async (req, res) => {
       return res.status(404).json({ error: "Canción no encontrada" });
     }
     res.json(cancionActualizada);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
-router.options("/canciones/:id", async (req, res) => {
+router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.send(200);

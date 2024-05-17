@@ -8,28 +8,35 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const artistas = await Artista.find();
     res.json(artistas);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 });
 //crear
-router.post("/artistas", async (req, res) => {
+router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const nuevoArtista = new Artista(req.body);
     const artistaGuardado = await nuevoArtista.save();
     res.json(artistaGuardado);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
 //modificar
-router.put("/artistas/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const { id } = req.params;
     const artistaActualizado = await Artista.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -38,11 +45,13 @@ router.put("/artistas/:id", async (req, res) => {
       return res.status(404).json({ error: "Artista no encontrado" });
     }
     res.json(artistaActualizado);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
-router.options("/artistas/:id", async (req, res) => {
+router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.send(200);

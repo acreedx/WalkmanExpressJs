@@ -8,28 +8,35 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const ListaReproducciones = await ListaReproduccion.find();
     res.json(ListaReproducciones);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 });
 //crear
-router.post("/listas-reproduccion", async (req, res) => {
+router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const nuevaListaReproduccion = new ListaReproduccion(req.body);
     const listaReproduccionGuardada = await nuevaListaReproduccion.save();
     res.json(listaReproduccionGuardada);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
 //modificar
-router.put("/listas-reproduccion/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try {
+  try 
+  {
     const { id } = req.params;
     const listaReproduccionActualizada =
       await ListaReproduccion.findByIdAndUpdate(id, req.body, { new: true });
@@ -39,11 +46,13 @@ router.put("/listas-reproduccion/:id", async (req, res) => {
         .json({ error: "Lista de reproducción no encontrada" });
     }
     res.json(listaReproduccionActualizada);
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(400).json({ error: error.message });
   }
 });
-router.options("/listas-reproduccion/:id", async (req, res) => {
+router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.send(200);

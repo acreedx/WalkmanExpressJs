@@ -63,8 +63,8 @@ const Artista = mongoose.model('Artista', artistaSchema);
 const Usuarios = mongoose.model('Seguidores', usuariosSchema);
 const Preferencias = mongoose.model('Seguidores', preferenciasSchema);
 const Album = mongoose.model('Album', albumSchema);
-const Cancion = mongoose.model('Cancion', cancionSchema);
 const ListaReproduccion = mongoose.model('ListaReproduccion', listaReproduccionSchema);
+const Cancion = mongoose.model('Cancion', cancionSchema);
   
 module.exports = Artista;
 module.exports = Usuarios;
