@@ -189,7 +189,8 @@ const crearDatosIniciales = async () => {
     fechaLanzamiento: "2022-05-06",
     URLPortada:
       "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
-    URLArchivo: "",
+    URLArchivo:
+      "magnet:?xt=urn:btih:2d62c7bbe7092637914296cfaf8468c04a705901&dn=01.mp3&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
     estado: true,
     numeroReproducciones: 0,
   });
@@ -202,7 +203,8 @@ const crearDatosIniciales = async () => {
     fechaLanzamiento: "",
     URLPortada:
       "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
-    URLArchivo: "",
+    URLArchivo:
+      "magnet:?xt=urn:btih:6cd5a0659a0e1610be42775f65a4b104f69efb7b&dn=02.mp3&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
     estado: true,
     numeroReproducciones: 0,
   });
@@ -215,7 +217,8 @@ const crearDatosIniciales = async () => {
     fechaLanzamiento: "",
     URLPortada:
       "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
-    URLArchivo: "",
+    URLArchivo:
+      "magnet:?xt=urn:btih:2f8d9d7a8c7b0391c0aed363fd822d0e21d54b76&dn=03.mp3&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
     estado: true,
     numeroReproducciones: 0,
   });
@@ -228,7 +231,8 @@ const crearDatosIniciales = async () => {
     fechaLanzamiento: "",
     URLPortada:
       "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
-    URLArchivo: "",
+    URLArchivo:
+      "magnet:?xt=urn:btih:7eedc9c2f66ff6bc30296c8eb65127201840324a&dn=04.mp3&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
     estado: true,
     numeroReproducciones: 0,
   });
@@ -241,7 +245,8 @@ const crearDatosIniciales = async () => {
     fechaLanzamiento: "",
     URLPortada:
       "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
-    URLArchivo: "",
+    URLArchivo:
+      "magnet:?xt=urn:btih:007c5fa44f985da74cd206d8d2a6dfb682fa78d2&dn=05.mp3&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
     estado: true,
     numeroReproducciones: 0,
   });
@@ -664,6 +669,138 @@ const crearDatosIniciales = async () => {
   });
   //Album 3
   const cancion38 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion39 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion40 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion41 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion42 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion43 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion44 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion45 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion46 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion47 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion48 = await Cancion.create({
+    autorID: [artista3.id],
+    albumID: album3.id,
+    titulo: "",
+    duracion: "",
+    genero: "Pop",
+    fechaLanzamiento: "",
+    URLPortada: "",
+    URLArchivo: "",
+    estado: true,
+    numeroReproducciones: 0,
+  });
+  const cancion49 = await Cancion.create({
     autorID: [artista3.id],
     albumID: album3.id,
     titulo: "",
