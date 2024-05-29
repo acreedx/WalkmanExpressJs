@@ -1,5 +1,9 @@
 const express = require("express");
 const connectDB = require("../db");
+const Artista = require("../models/artista.js");
+const Album = require("../models/album.js");
+const Cancion = require("../models/canciones.js");
+const ListaReproduccion = require("../models/listareproduccion.js");
 const albumRouter = require("../routers/album");
 const artistasRouter = require("../routers/artistas");
 const cancionesRouter = require("../routers/canciones");
@@ -14,12 +18,45 @@ app.use("/artistas", artistasRouter);
 app.use("/canciones", cancionesRouter);
 app.use("/listareproduccion", listareproduccionRouter);
 app.get("/sembrarDatos", (req, res) => {
-  crearDatosIniciales();
+  try
+  {
+    crearDatosIniciales();
+  }
+  catch(e)
+  {
+    res.send("Error al crear los datos")
+  }
+  res.send("Datos sembrados correctamente!");
+});
+app.get("/sembrarDatosPrueba", (req, res) => {
+  try
+  {
+    crearArtistaEjemplo();
+  }
+  catch(e)
+  {
+    res.send("Error al crear los datos")
+  }
   res.send("Datos sembrados correctamente!");
 });
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+const crearArtistaEjemplo = async () => {
+  try
+  {
+    const artista = new Artista(
+      "Bad Bunny", 
+      "https://phantom-marca-mx.unidadeditorial.es/0e7b690b043bf473a037102c47dec9b6/resize/828/f/jpg/mx/assets/multimedia/imagenes/2024/04/14/17131036525704.jpg",
+      "Benito Antonio Martínez Ocasio, conocido por su nombre artístico Bad Bunny, es un cantante puertorriqueño de reggaeton y trap latino."
+    );
+    await artista.save();
+  }
+  catch(e)
+  {
+    res.send("Error " + e)
+  }
+}
 const crearDatosIniciales = async () => {
   //Artistas
   const artista1 = await Artista.create({
