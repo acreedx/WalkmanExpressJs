@@ -7,22 +7,19 @@ const timeLog = (req, res, next) => {
 router.use(timeLog);
 
 router.get("/", async (req, res) => {
-    res.header("Access-Controll-Allow-Origin", "*");
-    try 
-    {
-      const Usuarios = await Usuario.find();
-      res.json(Usuarios);
-    } 
-    catch (error) 
-    {
-      res.status(500).json({ message: error.message });
-    }
+  res.header("Access-Controll-Allow-Origin", "*");
+  try {
+    const Usuarios = await Usuario.find();
+    res.status(200).json(Usuarios);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 router.options("/:id", async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-    res.send(200);
-  });
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.send(200);
+});
 
 module.exports = router;

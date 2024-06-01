@@ -8,28 +8,76 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try 
-  {
+  try {
     const Canciones = await Cancion.find();
-    res.json(Canciones);
-  } 
-  catch (error) 
-  {
+    res.status(200).json(Canciones);
+  } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+router.get("/porgenero", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { genero } = req.body;
+  if (!genero) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.find({ genero: genero });
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/poridartista", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.find({ autorID: id });
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/pornombreartista", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { nombre } = req.body;
+  if (!nombre) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.aggregate([
+      {
+        $lookup: {
+          from: "artistas",
+          localField: "autorID",
+          foreignField: "_id",
+          as: "autor",
+        },
+      },
+      {
+        $unwind: "$autor",
+      },
+      {
+        $match: { "autor.nombre": nombre },
+      },
+    ]);
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 //crear
 router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try 
-  {
+  try {
     const nuevaCancion = new Cancion(req.body);
     const cancionGuardada = await nuevaCancion.save();
-    res.json(cancionGuardada);
-  } 
-  catch (error) 
-  {
-    res.status(400).json({ error: error.message });
+    res.status(200).json(cancionGuardada);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 //modificar
@@ -43,13 +91,12 @@ router.put("/:id", async (req, res) => {
     if (!cancionActualizada) {
       return res.status(404).json({ error: "Canción no encontrada" });
     }
-    res.json(cancionActualizada);
-  } 
-  catch (error) 
-  {
-    res.status(400).json({ error: error.message });
+    res.status(200).json(cancionActualizada);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
+//options
 router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
