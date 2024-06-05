@@ -9,12 +9,10 @@ router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try 
-  {
-    const Albumes = await Album.aggregate(
-      [
+  try {
+    const Albumes = await Album.aggregate([
       {
-        $unwind: "$autorID"
+        $unwind: "$autorID",
       },
       {
         $lookup: {
@@ -38,28 +36,25 @@ router.get("/", async (req, res) => {
           canciones: { $first: "$canciones" },
           estado: { $first: "$estado" },
           numeroReproducciones: { $first: "$numeroReproducciones" },
-          __v: { $first: "$__v" }
-        }
-      }
+          __v: { $first: "$__v" },
+        },
+      },
     ]);
     res.status(200).json(Albumes);
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 router.get("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
   const { id } = req.params;
-  if(!id) {
+  if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
   }
-  try 
-  {
+  try {
     const Albumes = await Album.aggregate([
       {
-        $unwind: "$autorID"
+        $unwind: "$autorID",
       },
       {
         $lookup: {
@@ -83,39 +78,33 @@ router.get("/:id", async (req, res) => {
           canciones: { $first: "$canciones" },
           estado: { $first: "$estado" },
           numeroReproducciones: { $first: "$numeroReproducciones" },
-          __v: { $first: "$__v" }
-        }
+          __v: { $first: "$__v" },
+        },
       },
       {
-        $match: { "_id" : new ObjectId(id.toString()) }
-      }
+        $match: { _id: new ObjectId(id.toString()) },
+      },
     ]);
     res.status(200).json(Albumes);
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 //crear
 router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try 
-  {
+  try {
     const nuevoAlbum = new Album(req.body);
     const albumGuardado = await nuevoAlbum.save();
     res.json(albumGuardado);
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 //modificar
 router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
-  try 
-  {
+  try {
     const { id } = req.params;
     const albumActualizado = await Album.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -124,9 +113,7 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Álbum no encontrado" });
     }
     res.json(albumActualizado);
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });

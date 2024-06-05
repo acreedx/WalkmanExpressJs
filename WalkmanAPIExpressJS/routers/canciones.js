@@ -93,12 +93,26 @@ router.get("/poridalbum/:id", async (req, res) => {
         $match: { "album._id": new ObjectId(id.toString()) },
       },
       {
+        $unwind: "$autorID",
+      },
+      {
+        $lookup: {
+          from: "artistas",
+          localField: "autorID",
+          foreignField: "_id",
+          as: "autor",
+        },
+      },
+      {
         $group: {
           _id: "$album._id",
           album: { $first: "$album" },
           canciones: {
             $push: {
               _id: "$_id",
+              autorID: "$autorID",
+              autor: "$autor",
+              albumID: "$albumID",
               titulo: "$titulo",
               duracion: "$duracion",
               genero: "$genero",
