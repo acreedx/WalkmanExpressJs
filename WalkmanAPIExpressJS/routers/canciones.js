@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Cancion = require("../models/canciones.js");
+const { ObjectId } = require("mongodb");
 const timeLog = (req, res, next) => {
   next();
 };
@@ -62,6 +63,60 @@ router.get("/pornombreartista", async (req, res) => {
       },
       {
         $match: { "autor.nombre": nombre },
+      },
+    ]);
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/poridalbum/:id", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.aggregate([
+      {
+        $lookup: {
+          from: "albums",
+          localField: "albumID",
+          foreignField: "_id",
+          as: "album",
+        },
+      },
+      {
+        $unwind: "$album",
+      },
+      {
+        $match: { "album._id": new ObjectId(id.toString()) },
+      },
+      {
+        $group: {
+          _id: "$album._id",
+          album: { $first: "$album" },
+          canciones: {
+            $push: {
+              _id: "$_id",
+              titulo: "$titulo",
+              duracion: "$duracion",
+              genero: "$genero",
+              fechaLanzamiento: "$fechaLanzamiento",
+              URLPortada: "$URLPortada",
+              URLArchivo: "$URLArchivo",
+              estado: "$estado",
+              numeroReproducciones: "$numeroReproducciones",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          album: 1,
+          canciones: 1,
+        },
       },
     ]);
     res.status(200).json(Canciones);

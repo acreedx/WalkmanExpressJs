@@ -15,14 +15,14 @@ const usuariosRouter = require("../routers/usuarios");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-/*
+
 const port = 3000;
 async function init() {
   app.listen(port);
   console.log("Server on port 3000");
 }
 init();
-*/
+
 app.get("", async (req, res) => {
   res.send("Hello Word!");
 });
