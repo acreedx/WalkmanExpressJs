@@ -5,7 +5,7 @@ const timeLog = (req, res, next) => {
   next();
 };
 router.use(timeLog);
-//listar
+//GET
 router.get("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
   try {
@@ -69,7 +69,74 @@ router.get("/pornombreartista", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-//crear
+router.get("/poridcancion", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.find({ _id: id });
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/pornombrecancion", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { nombre } = req.body;
+  if (!nombre) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.find({ titulo: nombre });
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/poridalbum", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.find({ albumID: id });
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get("/pornombrealbum", async (req, res) => {
+  res.header("Access-Controll-Allow-Origin", "*");
+  const { nombre } = req.body;
+  if (!nombre) {
+    return res.status(400).json({ message: "Petición mal formada" });
+  }
+  try {
+    const Canciones = await Cancion.aggregate([
+      {
+        $lookup: {
+          from: "albums",
+          localField: "albumID",
+          foreignField: "_id",
+          as: "album",
+        },
+      },
+      {
+        $unwind: "$album",
+      },
+      {
+        $match: { "album.tituloAlbum": nombre },
+      },
+    ]);
+    res.status(200).json(Canciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+//POST
 router.post("/", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
   try {
@@ -80,7 +147,8 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-//modificar
+
+//PUT
 router.put("/:id", async (req, res) => {
   res.header("Access-Controll-Allow-Origin", "*");
   try {
@@ -96,7 +164,8 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-//options
+
+//OPTIONS
 router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
