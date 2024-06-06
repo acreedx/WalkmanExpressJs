@@ -6,7 +6,7 @@ const albumSchema = new Schema({
   tituloAlbum: { type: String, required: true },
   fechaLanzamiento: { type: Date, required: true },
   URLportada: { type: String, required: true },
-  canciones: [{ type: Schema.Types.ObjectId, ref: "Cancion" }],
+  cancionID: [{ type: Schema.Types.ObjectId, ref: "Cancion", required: true }],
   estado: { type: Boolean, default: false },
   numeroReproducciones: { type: Number, required: true },
 });

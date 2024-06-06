@@ -12,9 +12,6 @@ router.get("/", async (req, res) => {
   try {
     const Albumes = await Album.aggregate([
       {
-        $unwind: "$autorID",
-      },
-      {
         $lookup: {
           from: "artistas",
           localField: "autorID",
@@ -23,20 +20,11 @@ router.get("/", async (req, res) => {
         },
       },
       {
-        $unwind: "$autor",
-      },
-      {
-        $group: {
-          _id: "$_id",
-          autorID: { $push: "$autorID" },
-          autores: { $push: "$autor" },
-          tituloAlbum: { $first: "$tituloAlbum" },
-          fechaLanzamiento: { $first: "$fechaLanzamiento" },
-          URLportada: { $first: "$URLportada" },
-          canciones: { $first: "$canciones" },
-          estado: { $first: "$estado" },
-          numeroReproducciones: { $first: "$numeroReproducciones" },
-          __v: { $first: "$__v" },
+        $lookup: {
+          from: "cancions",
+          localField: "cancionID",
+          foreignField: "_id",
+          as: "canciones",
         },
       },
     ]);
@@ -54,7 +42,7 @@ router.get("/:id", async (req, res) => {
   try {
     const Albumes = await Album.aggregate([
       {
-        $unwind: "$autorID",
+        $match: { _id: new ObjectId(id.toString()) },
       },
       {
         $lookup: {
@@ -65,24 +53,12 @@ router.get("/:id", async (req, res) => {
         },
       },
       {
-        $unwind: "$autor",
-      },
-      {
-        $group: {
-          _id: "$_id",
-          autorID: { $push: "$autorID" },
-          autores: { $push: "$autor" },
-          tituloAlbum: { $first: "$tituloAlbum" },
-          fechaLanzamiento: { $first: "$fechaLanzamiento" },
-          URLportada: { $first: "$URLportada" },
-          canciones: { $first: "$canciones" },
-          estado: { $first: "$estado" },
-          numeroReproducciones: { $first: "$numeroReproducciones" },
-          __v: { $first: "$__v" },
+        $lookup: {
+          from: "cancions",
+          localField: "cancionID",
+          foreignField: "_id",
+          as: "canciones",
         },
-      },
-      {
-        $match: { _id: new ObjectId(id.toString()) },
       },
     ]);
     res.status(200).json(Albumes);
