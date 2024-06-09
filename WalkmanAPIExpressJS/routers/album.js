@@ -24,7 +24,39 @@ router.get("/", async (req, res) => {
           from: "cancions",
           localField: "cancionID",
           foreignField: "_id",
-          as: "canciones",
+          as: "cancion",
+        },
+      },
+      {
+        $unwind: "$cancion",
+      },
+      {
+        $lookup: {
+          from: "artistas",
+          localField: "cancion.autorID",
+          foreignField: "_id",
+          as: "cancion.autor",
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          autorID: { $first: "$autorID" },
+          autor: { $first: "$autor" },
+          tituloAlbum: { $first: "$tituloAlbum" },
+          fechaLanzamiento: { $first: "$fechaLanzamiento" },
+          URLportada: { $first: "$URLportada" },
+          cancionID: { $first: "$cancionID" },
+          cancion: {
+            $push: "$cancion",
+          },
+          estado: { $first: "$estado" },
+          numeroReproducciones: { $first: "$numeroReproducciones" },
+        },
+      },
+      {
+        $sort: {
+          tituloAlbum: 1,
         },
       },
     ]);
@@ -57,7 +89,39 @@ router.get("/:id", async (req, res) => {
           from: "cancions",
           localField: "cancionID",
           foreignField: "_id",
-          as: "canciones",
+          as: "cancion",
+        },
+      },
+      {
+        $unwind: "$cancion",
+      },
+      {
+        $lookup: {
+          from: "artistas",
+          localField: "cancion.autorID",
+          foreignField: "_id",
+          as: "cancion.autor",
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          autorID: { $first: "$autorID" },
+          autor: { $first: "$autor" },
+          tituloAlbum: { $first: "$tituloAlbum" },
+          fechaLanzamiento: { $first: "$fechaLanzamiento" },
+          URLportada: { $first: "$URLportada" },
+          cancionID: { $first: "$cancionID" },
+          cancion: {
+            $push: "$cancion",
+          },
+          estado: { $first: "$estado" },
+          numeroReproducciones: { $first: "$numeroReproducciones" },
+        },
+      },
+      {
+        $sort: {
+          tituloAlbum: 1,
         },
       },
     ]);
