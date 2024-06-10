@@ -1,6 +1,10 @@
 const express = require("express");
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const router = express.Router();
 const Usuario = require("../models/usuarios.js");
+const bcryptjs = require("bcryptjs");
+const userSchema = require("../models/usuariosRequest.js");
 const timeLog = (req, res, next) => {
   next();
 };
