@@ -12,9 +12,11 @@ const cancionesRouter = require("../routers/canciones");
 const listareproduccionRouter = require("../routers/listareproduccion");
 const preferenciasRouter = require("../routers/preferencias");
 const usuariosRouter = require("../routers/usuarios");
+const loginRouter = require("../routers/login");
 const app = express();
 const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
+const cors = require("cors");
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -34,6 +36,7 @@ app.use("/canciones", cancionesRouter);
 app.use("/listareproduccion", listareproduccionRouter);
 app.use("/preferencias", preferenciasRouter);
 app.use("/usuarios", usuariosRouter);
+app.use("/login", loginRouter);
 app.get("/sembrarDatos", async (req, res) => {
   try {
     await crearDatosIniciales();

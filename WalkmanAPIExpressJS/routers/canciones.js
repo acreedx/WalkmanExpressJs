@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 router.get("/porgenero", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { genero } = req.body;
   if (!genero) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -29,14 +29,14 @@ router.get("/porgenero", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-router.get("/poridartista", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
-  const { id } = req.body;
+router.get("/poridartista/:id", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  const { id } = req.params;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
   }
   try {
-    const Canciones = await Cancion.find({ autorID: id });
+    const Canciones = await Cancion.find({ autorID: new ObjectId(id) });
     res.status(200).json(Canciones);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -71,7 +71,7 @@ router.get("/pornombreartista", async (req, res) => {
   }
 });
 router.get("/poridalbum/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { id } = req.params;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -139,7 +139,7 @@ router.get("/poridalbum/:id", async (req, res) => {
   }
 });
 router.get("/poridcancion", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { id } = req.body;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -152,7 +152,7 @@ router.get("/poridcancion", async (req, res) => {
   }
 });
 router.get("/pornombrecancion", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { nombre } = req.body;
   if (!nombre) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -166,7 +166,7 @@ router.get("/pornombrecancion", async (req, res) => {
 });
 //POST
 router.post("/", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const nuevaCancion = new Cancion(req.body);
     const cancionGuardada = await nuevaCancion.save();
@@ -178,7 +178,7 @@ router.post("/", async (req, res) => {
 
 //PUT
 router.put("/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const { id } = req.params;
     const cancionActualizada = await Cancion.findByIdAndUpdate(id, req.body, {
@@ -197,6 +197,7 @@ router.put("/:id", async (req, res) => {
 router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
 });
 module.exports = router;

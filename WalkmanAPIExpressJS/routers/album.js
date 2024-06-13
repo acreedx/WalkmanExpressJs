@@ -8,7 +8,7 @@ const timeLog = (req, res, next) => {
 router.use(timeLog);
 //listar
 router.get("/", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const Albumes = await Album.aggregate([
       {
@@ -66,7 +66,7 @@ router.get("/", async (req, res) => {
   }
 });
 router.get("/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { id } = req.params;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -132,7 +132,7 @@ router.get("/:id", async (req, res) => {
 });
 //crear
 router.post("/", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const nuevoAlbum = new Album(req.body);
     const albumGuardado = await nuevoAlbum.save();
@@ -143,7 +143,7 @@ router.post("/", async (req, res) => {
 });
 //modificar
 router.put("/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const { id } = req.params;
     const albumActualizado = await Album.findByIdAndUpdate(id, req.body, {
@@ -160,6 +160,7 @@ router.put("/:id", async (req, res) => {
 router.options("/:id", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
 });
 module.exports = router;

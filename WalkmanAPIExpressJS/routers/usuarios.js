@@ -5,13 +5,36 @@ const router = express.Router();
 const Usuario = require("../models/usuarios.js");
 const bcryptjs = require("bcryptjs");
 const userSchema = require("../models/usuariosRequest.js");
+const { ObjectId } = require("mongodb");
+const jwt = require("jsonwebtoken");
 const timeLog = (req, res, next) => {
   next();
+};
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Token de autenticación no proporcionado" });
+  }
+
+  jwt.verify(token, "1234", (err, user) => {
+    if (err) {
+      return res
+        .status(403)
+        .json({ message: "Token de autenticación inválido" });
+    }
+
+    req.user = user;
+    next();
+  });
 };
 router.use(timeLog);
 //GET
 router.get("/", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const Usuarios = await Usuario.find();
     res.status(200).json(Usuarios);
@@ -20,13 +43,12 @@ router.get("/", async (req, res) => {
   }
 });
 router.get("/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
   const { id } = req.params;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
   }
   try {
-    const usuario = await Usuario.findOne({ _id: id });
+    const usuario = await Usuario.findOne({ _id: new ObjectId(id) });
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
@@ -35,30 +57,9 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-//POST
-router.post("/", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
-  const { idSql, nombre } = req.body;
-  if (!idSql || !nombre) {
-    return res.status(400).json({ message: "Petición mal formada" });
-  }
-  try {
-    const usuario = await Usuario.find({ idSql: idSql, nombre: nombre });
-    if (usuario.nombre) {
-      return res
-        .status(409)
-        .json({ message: "Ya existe un usuario con esos datos" });
-    }
-    const nuevoUsuario = new Usuario(req.body);
-    const usuarioCreado = await nuevoUsuario.save();
-    res.status(200).json(usuarioCreado);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 //PUT
 router.put("/:id", async (req, res) => {
-  res.header("Access-Controll-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
   const { id } = req.params;
   if (!id) {
     return res.status(400).json({ message: "Petición mal formada" });
@@ -75,12 +76,6 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-//OPTIONS
-router.options("/:id", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-  res.send(200);
 });
 
 module.exports = router;

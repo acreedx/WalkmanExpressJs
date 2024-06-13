@@ -7,6 +7,7 @@ const usuariosSchema = new Schema({
   URLFoto: { type: String, required: true },
   descripcion: { type: String, required: true },
   estado: { type: Boolean, default: false },
+  correo: { type: String, required: true },
   artistasSeguidos: [{ type: Schema.Types.ObjectId, ref: "Artista" }],
   usuariosSeguidos: [{ type: Schema.Types.ObjectId, ref: "Usuarios" }],
 });
